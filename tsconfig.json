@@ -1,0 +1,10 @@
+{
+  "files": [],
+  "references": [
+    { "path": "packages/shared" },
+    { "path": "packages/workflows" },
+    { "path": "packages/activities" },
+    { "path": "packages/workers" },
+    { "path": "packages/cli" }
+  ]
+}

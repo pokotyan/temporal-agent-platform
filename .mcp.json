@@ -1,0 +1,13 @@
+{
+  "mcpServers": {
+    "tap-dev": {
+      "type": "stdio",
+      "command": "node",
+      "args": ["${CLAUDE_PLUGIN_ROOT}/scripts/mcp-server.js"],
+      "env": {
+        "TEMPORAL_ADDRESS": "localhost:7233",
+        "NODE_PATH": "${CLAUDE_PLUGIN_ROOT}/../node_modules"
+      }
+    }
+  }
+}

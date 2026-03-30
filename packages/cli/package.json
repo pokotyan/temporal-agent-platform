@@ -1,0 +1,19 @@
+{
+  "name": "@tap/cli",
+  "version": "0.1.0",
+  "private": true,
+  "bin": {
+    "tap": "dist/index.js"
+  },
+  "scripts": {
+    "build": "tsc --build",
+    "clean": "rm -rf dist"
+  },
+  "dependencies": {
+    "@tap/shared": "*",
+    "@temporalio/client": "^1.11.0",
+    "commander": "^13.0.0",
+    "chalk": "^4.1.2",
+    "ora": "^5.4.1"
+  }
+}

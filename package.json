@@ -1,0 +1,28 @@
+{
+  "name": "temporal-agent-platform",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Temporal + K3d workflow platform for Claude Code agents",
+  "workspaces": [
+    "packages/shared",
+    "packages/workflows",
+    "packages/activities",
+    "packages/workers",
+    "packages/cli"
+  ],
+  "scripts": {
+    "build": "npm run build --workspaces",
+    "clean": "npm run clean --workspaces --if-present",
+    "lint": "biome check packages/*/src/",
+    "lint:fix": "biome check --write packages/*/src/",
+    "typecheck": "tsc --build tsconfig.json",
+    "test:scripts": "node --test scripts/__tests__/*.test.js",
+    "test:scripts:integration": "TAP_INTEGRATION_TESTS=1 node --test scripts/__tests__/*.test.js"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "^2.4.9",
+    "@modelcontextprotocol/sdk": "^1.28.0",
+    "@types/node": "^22.0.0",
+    "typescript": "^5.7.0"
+  }
+}

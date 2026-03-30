@@ -1,0 +1,124 @@
+name: 開発フローデモ
+description: ""
+initial_step: plan
+max_iterations: 15
+
+temporal:
+  task_queue: agent-tasks
+  workflow_execution_timeout: 1h
+
+steps:
+  - name: plan
+    agent: planner
+    edit: false
+    instruction_template: |
+      Analyze the following task and create a detailed implementation plan.
+      
+      ## Task
+      {task}
+      
+      ## Requirements
+      - Break down into concrete, actionable steps
+      - Identify files to create or modify
+      - Consider edge cases and testing strategy
+      - If requirements are unclear, output [PLAN:ABORT]
+      - When plan is ready, output [PLAN:READY]
+    rules:
+      - condition: "Plan is ready and complete"
+        next: implement
+      - condition: "Requirements are unclear or task cannot proceed"
+        next: ABORT
+  - name: implement
+    agent: coder
+    edit: true
+    pass_previous_response: true
+    instruction_template: |
+      Implement the plan from the previous step.
+      
+      ## Plan
+      {previous_response}
+      
+      ## Original Task
+      {task}
+      
+      ## Guidelines
+      - Follow the plan step by step
+      - Write clean, well-documented code
+      - Include error handling
+      - When done, output [IMPLEMENT:DONE]
+      - If blocked, output [IMPLEMENT:BLOCKED]
+    rules:
+      - condition: "Implementation is complete"
+        next: review
+      - condition: "Cannot proceed, needs re-planning"
+        next: plan
+  - name: review
+    agent: reviewer
+    edit: false
+    instruction_template: |
+          Review the implementation for security issues.
+      
+          ## Changes
+          {previous_response}
+      
+          ## Security Criteria
+          - Input validation and sanitization
+          - Authentication and authorization
+          - Secrets management
+          - Injection vulnerabilities
+          - Output [SECURITY-REVIEW:APPROVED] or [SECURITY-REVIEW:NEEDS_FIX]
+    rules:
+      - condition: "Approved"
+        next: 
+      - condition: "Needs fix"
+        next: 
+      - condition: "Approved"
+        next: 
+      - condition: "Needs fix"
+        next: 
+      - condition: "all("approved")"
+        next: supervise
+      - condition: "any("needs_fix")"
+        next: fix
+  - name: fix
+    agent: coder
+    edit: true
+    pass_previous_response: true
+    instruction_template: |
+      Fix the issues identified in the review.
+      
+      ## Review Feedback
+      {previous_response}
+      
+      ## Guidelines
+      - Address each review comment
+      - Do not introduce new issues
+      - When fixes are complete, output [FIX:DONE]
+    rules:
+      - condition: "Fixes are complete"
+        next: review
+      - condition: "Cannot fix, needs re-planning"
+        next: plan
+  - name: supervise
+    agent: supervisor
+    edit: false
+    pass_previous_response: true
+    instruction_template: |
+      Final review of the completed implementation.
+      
+      ## Implementation Summary
+      {previous_response}
+      
+      ## Original Task
+      {task}
+      
+      ## Verification
+      - Does the implementation match the original task?
+      - Are all acceptance criteria met?
+      - Is the code ready for production?
+      - Output [SUPERVISE:APPROVED] or [SUPERVISE:REVISE]
+    rules:
+      - condition: "Approved for completion"
+        next: COMPLETE
+      - condition: "Needs revision"
+        next: implement

@@ -1,0 +1,19 @@
+{
+  "name": "@tap/workers",
+  "version": "0.1.0",
+  "private": true,
+  "main": "dist/index.js",
+  "scripts": {
+    "build": "tsc --build",
+    "clean": "rm -rf dist",
+    "start:orchestrator": "node dist/orchestrator-worker.js",
+    "start:agent": "node dist/agent-worker.js"
+  },
+  "dependencies": {
+    "@tap/shared": "*",
+    "@tap/workflows": "*",
+    "@tap/activities": "*",
+    "@temporalio/worker": "^1.11.0",
+    "@temporalio/client": "^1.11.0"
+  }
+}

@@ -1,0 +1,32 @@
+name: 入力待ちデモ
+description: "Human-in-the-loop のデモ。AIが質問し、人間の回答を待ってから次のステップに進む。"
+initial_step: ask
+max_iterations: 10
+
+temporal:
+  task_queue: agent-tasks
+
+steps:
+  - name: ask
+    edit: false
+    instruction_template: |
+      ユーザーに好きなプログラミング言語を聞いてください。
+      質問だけ出力し、それ以外は何もしないでください。
+      ツールは使わないでください。
+
+      出力の最後に必ず以下のタグを含めてください:
+      [NEEDS_INPUT]
+    rules:
+      - condition: "常にtrue"
+        next: answer
+
+  - name: answer
+    edit: false
+    instruction_template: |
+      ユーザーの好きなプログラミング言語: {user_input}
+
+      この言語の良いところを3つ、簡潔に日本語で挙げてください。
+      ツールは使わないでください。
+    rules:
+      - condition: "常にtrue"
+        next: COMPLETE

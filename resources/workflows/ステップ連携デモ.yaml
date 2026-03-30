@@ -1,0 +1,48 @@
+name: ステップ連携デモ
+description: "前ステップの出力を次ステップに引き継ぐデモ。調査 → 要約 → 翻訳 の3段階。"
+task: "Temporal Workflow の主要な特徴"
+initial_step: investigate
+max_iterations: 10
+
+temporal:
+  task_queue: agent-tasks
+
+steps:
+  - name: investigate
+    edit: false
+    instruction_template: |
+      以下のトピックについて、あなたの知識だけで箇条書きで5つのポイントを挙げてください。
+      ツールは使わず、知識のみで回答してください。
+
+      トピック: {task}
+
+      日本語で回答してください。
+    rules:
+      - condition: "常にtrue"
+        next: summarize
+
+  - name: summarize
+    edit: false
+    pass_previous_response: true
+    instruction_template: |
+      以下の調査結果を、3行以内の簡潔な要約にまとめてください。
+      ツールは使わないでください。
+
+      ## 調査結果
+      {previous_response}
+    rules:
+      - condition: "常にtrue"
+        next: translate
+
+  - name: translate
+    edit: false
+    pass_previous_response: true
+    instruction_template: |
+      以下の日本語テキストを英語に翻訳してください。
+      ツールは使わないでください。
+
+      ## 翻訳対象
+      {previous_response}
+    rules:
+      - condition: "常にtrue"
+        next: COMPLETE

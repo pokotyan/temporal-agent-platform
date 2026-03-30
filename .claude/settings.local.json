@@ -1,0 +1,42 @@
+{
+  "permissions": {
+    "allow": [
+      "WebFetch(domain:registry.npmjs.org)",
+      "Bash(python3 -m json.tool /Users/tomohiro.soga/workspace/temporal-agent-platform/hooks/hooks.json)",
+      "Bash(for f:*)",
+      "Bash(do python3:*)",
+      "Bash(done)",
+      "Bash(do node:*)",
+      "Bash(temporal --version)",
+      "Bash(brew install:*)",
+      "Bash(grep:*)",
+      "Bash(node:*)",
+      "Read(//Users/tomohiro.soga/.tap/logs/**)",
+      "Bash(npm run:*)",
+      "Bash(echo \"exit code: $?\")",
+      "Bash(docker rm:*)",
+      "Bash(docker run:*)",
+      "Bash(docker search:*)",
+      "WebFetch(domain:nyosegawa.com)",
+      "Bash(curl -s http://localhost:8234/)",
+      "Bash(curl -s http://localhost:8234/api/services)",
+      "Bash(curl -s http://localhost:8234/api/workflows)",
+      "Bash(python3 -c \"import json,sys; d=json.load\\(sys.stdin\\); [print\\(k\\) for k in d.get\\(''''mcpServers'''',{}\\).keys\\(\\)]\")",
+      "mcp__chrome-devtools__navigate_page",
+      "mcp__chrome-devtools__take_screenshot",
+      "mcp__chrome-devtools__evaluate_script",
+      "mcp__chrome-devtools__list_console_messages",
+      "Bash(file ~/.claude/skills/code-review/*)",
+      "Bash(tap stop:*)",
+      "Bash(tap start:*)",
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\" http://localhost:8234/editor)",
+      "Bash(curl -s http://localhost:8234/editor)",
+      "Bash(kill 214)",
+      "mcp__chrome-devtools__take_snapshot",
+      "mcp__chrome-devtools__click",
+      "mcp__chrome-devtools__fill",
+      "mcp__chrome-devtools__new_page",
+      "Bash(curl -s \"http://localhost:8234/api/workflows/tap-1774852156990-create-a-javascript-function-t\")"
+    ]
+  }
+}

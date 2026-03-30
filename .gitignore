@@ -1,0 +1,20 @@
+node_modules/
+dist/
+*.js.map
+*.tsbuildinfo
+
+# Temporal dev server data
+.temporal/
+.temporal-dev.db
+
+# Logs
+*.log
+
+# Vite build output (generated from frontend/)
+ui/
+
+# Frontend dependencies
+frontend/node_modules/
+
+# Local tool/editor data
+.cocoindex_code/

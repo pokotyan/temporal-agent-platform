@@ -1,0 +1,29 @@
+name: 自己参照ループデモ
+description: "自己参照ルールによるループのデモ。3回カウントしたら終了する。"
+initial_step: count
+max_iterations: 5
+
+temporal:
+  task_queue: agent-tasks
+
+steps:
+  - name: count
+    edit: false
+    pass_previous_response: true
+    instruction_template: |
+      あなたはカウンターです。ツールは使わないでください。
+
+      前回の出力:
+      {previous_response}
+
+      ルール:
+      - 前回の出力がなければ「カウント: 1」と出力してください
+      - 前回「カウント: N」なら「カウント: N+1」と出力してください
+      - カウントが3に達したら「カウント: 3 - 完了！」と出力してください
+
+      出力は1行だけにしてください。
+    rules:
+      - condition: "カウントが3に達して完了"
+        next: COMPLETE
+      - condition: "まだ続ける"
+        next: count

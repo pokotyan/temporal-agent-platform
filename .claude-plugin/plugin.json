@@ -1,0 +1,10 @@
+{
+  "name": "tap-dev-services",
+  "version": "0.1.0",
+  "description": "Auto-manages Temporal Agent Platform dev services for Claude Code sessions",
+  "author": {
+    "name": "TAP Team"
+  },
+  "license": "MIT",
+  "keywords": ["temporal", "workflow", "agent", "dev-server"]
+}

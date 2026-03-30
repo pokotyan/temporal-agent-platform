@@ -1,0 +1,22 @@
+name: 定期実行デモ
+description: "cronによる定期実行のデモ。5分おきに現在日時を出力する。"
+task: "現在の日時を日本語で出力してください"
+initial_step: execute
+max_iterations: 1
+
+temporal:
+  task_queue: agent-tasks
+  schedule:
+    cron: "*/5 * * * *"
+    overlap_policy: skip
+
+steps:
+  - name: execute
+    edit: false
+    instruction_template: |
+      {task}
+
+      ツールは使わず、知識のみで回答してください。簡潔に1行で。
+    rules:
+      - condition: "常にtrue"
+        next: COMPLETE
